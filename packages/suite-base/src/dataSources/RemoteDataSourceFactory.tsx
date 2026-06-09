@@ -35,11 +35,21 @@ const initWorkers: Record<string, () => Worker> = {
       ),
     );
   },
+  ".td": () => {
+    return new Worker(
+      // foxglove-depcheck-used: babel-plugin-transform-import-meta
+      new URL(
+        "@lichtblick/suite-base/players/IterablePlayer/Turbodata/TurbodataIterableSourceWorker.worker",
+        import.meta.url,
+      ),
+    );
+  },
 };
 
 const fileTypesAllowed: AllowedFileExtensions[] = [
   AllowedFileExtensions.BAG,
   AllowedFileExtensions.MCAP,
+  AllowedFileExtensions.TD,
 ];
 
 export function checkExtensionMatch(fileExtension: string, previousExtension?: string): string {
@@ -62,7 +72,7 @@ class RemoteDataSourceFactory implements IDataSourceFactory {
   public displayName = "Remote file";
   public iconName: IDataSourceFactory["iconName"] = "FileASPX";
   public supportedFileTypes = fileTypesAllowed;
-  public description = "Open pre-recorded .bag or .mcap files from a remote location.";
+  public description = "Open pre-recorded .bag, .mcap or .td files from a remote location.";
   public docsLinks = [
     {
       label: "ROS 1",

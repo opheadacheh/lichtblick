@@ -52,6 +52,7 @@ export { default as UlogLocalDataSourceFactory } from "./dataSources/UlogLocalDa
 export { default as RemoteDataSourceFactory } from "./dataSources/RemoteDataSourceFactory";
 export { default as VelodyneDataSourceFactory } from "./dataSources/VelodyneDataSourceFactory";
 export { default as McapLocalDataSourceFactory } from "./dataSources/McapLocalDataSourceFactory";
+export { default as TurbodataLocalDataSourceFactory } from "./dataSources/TurbodataLocalDataSourceFactory";
 export { default as SampleNuscenesDataSourceFactory } from "./dataSources/SampleNuscenesDataSourceFactory";
 export { LaunchPreferenceValue } from "@lichtblick/suite-base/types/LaunchPreferenceValue";
 export { reportError, setReportErrorHandler } from "./reportError";

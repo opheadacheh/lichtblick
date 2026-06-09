@@ -22,6 +22,7 @@ import {
   RosbridgeDataSourceFactory,
   SampleNuscenesDataSourceFactory,
   SharedRoot,
+  TurbodataLocalDataSourceFactory,
   UlogLocalDataSourceFactory,
 } from "@lichtblick/suite-base";
 import { APP_CONFIG } from "@lichtblick/suite-base/constants/config";
@@ -67,6 +68,7 @@ export function WebRoot(props: {
       new UlogLocalDataSourceFactory(),
       new SampleNuscenesDataSourceFactory(),
       new McapLocalDataSourceFactory(),
+      new TurbodataLocalDataSourceFactory(),
       new RemoteDataSourceFactory(),
     ];
 

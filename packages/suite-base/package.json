@@ -184,6 +184,7 @@
     "ts-key-enum": "3.0.13",
     "ts-loader": "9.5.4",
     "tss-react": "4.9.19",
+    "turbodata": "portal:../../../turbodata/ts",
     "typescript": "5.9.3",
     "use-debounce": "10.0.0",
     "use-immer": "0.11.0",

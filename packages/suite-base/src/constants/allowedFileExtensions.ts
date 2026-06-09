@@ -6,6 +6,7 @@ export enum AllowedFileExtensions {
   JSON = ".json",
   BAG = ".bag",
   MCAP = ".mcap",
+  TD = ".td",
   DB3 = ".db3",
   ULG = ".ulg",
   ULOG = ".ulog",
