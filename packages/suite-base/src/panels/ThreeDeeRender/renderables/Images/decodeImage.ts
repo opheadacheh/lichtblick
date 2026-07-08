@@ -64,8 +64,12 @@ export async function decodeCompressedVideoToBitmap(
   videoPlayer: VideoPlayer,
   firstMessageTime: bigint,
   resizeWidth?: number,
-): Promise<ImageBitmap> {
+  shouldCreateBitmap: () => boolean = () => true,
+): Promise<ImageBitmap | undefined> {
   if (!videoPlayer.isInitialized()) {
+    if (!shouldCreateBitmap()) {
+      return undefined;
+    }
     return await emptyVideoFrame(videoPlayer, resizeWidth);
   }
 
@@ -79,10 +83,18 @@ export async function decodeCompressedVideoToBitmap(
     isVideoKeyframe(frameMsg) ? "key" : "delta",
   );
   if (videoFrame) {
+    if (!shouldCreateBitmap()) {
+      videoFrame.close();
+      return undefined;
+    }
+
     const imageBitmap = await self.createImageBitmap(videoFrame, { resizeWidth });
     videoPlayer.lastImageBitmap = imageBitmap;
     videoFrame.close();
     return imageBitmap;
+  }
+  if (!shouldCreateBitmap()) {
+    return undefined;
   }
   return await emptyVideoFrame(videoPlayer, resizeWidth);
 }

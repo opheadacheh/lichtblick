@@ -211,10 +211,17 @@ export class ImageRenderable extends Renderable<ImageUserData> {
     this.userData.image = image;
 
     const seq = ++this.#receivedImageSequenceNumber;
-    const decodePromise = this.decodeImage(image, resizeWidth);
+    const decodePromise = this.decodeImage(
+      image,
+      resizeWidth,
+      () => this.#receivedImageSequenceNumber === seq,
+    );
 
     decodePromise
       .then((result) => {
+        if (result == undefined) {
+          return;
+        }
         if (this.isDisposed()) {
           return;
         }
@@ -265,7 +272,8 @@ export class ImageRenderable extends Renderable<ImageUserData> {
   protected async decodeImage(
     image: AnyImage,
     resizeWidth?: number,
-  ): Promise<ImageBitmap | ImageData> {
+    shouldCreateBitmap: () => boolean = () => true,
+  ): Promise<ImageBitmap | ImageData | undefined> {
     if ("format" in image) {
       if (!VIDEO_FORMATS.has(image.format)) {
         return await decodeCompressedImageToBitmap(image, resizeWidth);
@@ -275,6 +283,9 @@ export class ImageRenderable extends Renderable<ImageUserData> {
         if (frameMsg.data.byteLength === 0) {
           const error = "Empty video frame";
           log.error(error);
+          if (!shouldCreateBitmap()) {
+            return undefined;
+          }
           // show last frame instead of error image if available
           if (this.videoPlayer?.lastImageBitmap) {
             return this.videoPlayer.lastImageBitmap;
@@ -301,6 +312,9 @@ export class ImageRenderable extends Renderable<ImageUserData> {
           if (decoderConfig != undefined) {
             await videoPlayer.init(decoderConfig);
           } else {
+            if (!shouldCreateBitmap()) {
+              return undefined;
+            }
             // Raise error so the caller can catch it
             throw new Error("Waiting for keyframe");
           }
@@ -313,6 +327,7 @@ export class ImageRenderable extends Renderable<ImageUserData> {
           videoPlayer,
           this.userData.firstMessageTime,
           resizeWidth,
+          shouldCreateBitmap,
         );
       }
     }

@@ -88,6 +88,32 @@ describe("decodeCompressedVideoToBitmap", () => {
     expect(mockVideoPlayer.lastImageBitmap).toBeDefined();
   });
 
+  it("should decode stale video frames without creating an ImageBitmap", async () => {
+    const mockVideoFrame = createMockVideoFrame();
+    const close = jest.fn();
+    const decode = jest.fn().mockResolvedValue({ close } as unknown as VideoFrame);
+    const mockVideoPlayer = {
+      isInitialized: jest.fn().mockReturnValue(true),
+      decode,
+    } as unknown as VideoPlayer;
+    const createImageBitmapSpy = jest.spyOn(globalThis, "createImageBitmap");
+    createImageBitmapSpy.mockClear();
+
+    const bitmap = await decodeCompressedVideoToBitmap(
+      mockVideoFrame,
+      mockVideoPlayer,
+      0n,
+      undefined,
+      () => false,
+    );
+
+    expect(bitmap).toBeUndefined();
+    expect(decode).toHaveBeenCalled();
+    expect(close).toHaveBeenCalledTimes(1);
+    expect(mockVideoPlayer.lastImageBitmap).toBeUndefined();
+    expect(createImageBitmapSpy).not.toHaveBeenCalled();
+  });
+
   it("should return an empty video frame if the video player is not initialized", async () => {
     const mockVideoFrame = createMockVideoFrame();
     const mockVideoPlayer = {
