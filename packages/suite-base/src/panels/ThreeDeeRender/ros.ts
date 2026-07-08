@@ -366,7 +366,8 @@ function addRosDataType(output: Set<string>, dataType: string): Set<string> {
     output.add(`${base}/msg/${leaf}`);
   }
 
-  // Add the protobuf variation: ros.tf2_msgs.TFMessage
+  // Add protobuf variations: tf2_msgs.TFMessage and ros.tf2_msgs.TFMessage
+  output.add(dataType.split("/").join("."));
   output.add("ros." + dataType.split("/").join("."));
 
   return output;

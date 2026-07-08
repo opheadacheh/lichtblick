@@ -24,6 +24,7 @@ import RenderStateBuilder from "@lichtblick/suite-base/testing/builders/RenderSt
 import { Renderer } from "./Renderer";
 import { ThreeDeeRender } from "./ThreeDeeRender";
 import { DEFAULT_CAMERA_STATE } from "./camera";
+import { TF_DATATYPES } from "./ros";
 import type { InterfaceMode, ThreeDeeRenderProps } from "./types";
 
 // three.js modules
@@ -432,6 +433,71 @@ describe("ThreeDeeRender", () => {
       // Then
       expect(mockContext.unstable_subscribeMessageRange).toHaveBeenCalledTimes(0);
       expect(mockUnsubscribe).not.toHaveBeenCalled();
+    });
+
+    it("preloads unprefixed protobuf TFMessage topics", async () => {
+      // Given: protobuf schemas generated from `package tf2_msgs;` use this schema name.
+      const topicName = "/keypoints/body";
+      const customRendererInstance = createMockRenderer({
+        schemaSubscriptions: new Map(
+          Array.from(TF_DATATYPES, (schemaName) => [
+            schemaName,
+            [
+              {
+                preload: true,
+              },
+            ],
+          ]),
+        ),
+      });
+      const topics = [
+        RenderStateBuilder.topic({ name: topicName, schemaName: "tf2_msgs.TFMessage" }),
+      ];
+      jest.mocked(Renderer).mockImplementationOnce(() => customRendererInstance as any);
+
+      const mockContext = createPreloadingContext({
+        initialState: {
+          scene: {
+            transforms: {
+              enablePreloading: true,
+            },
+          },
+          topics: {
+            [topicName]: { visible: true },
+          },
+        },
+        onSubscribe: () => mockUnsubscribe,
+      });
+
+      const props = setup({}, mockContext);
+
+      // When
+      render(<ThreeDeeRender {...props} />);
+
+      await waitFor(() => {
+        expect(customRendererInstance.setTopics).toBeDefined();
+        expect(mockContext.onRender).toBeDefined();
+      });
+
+      act(() => {
+        mockContext.onRender!(
+          {
+            topics,
+          },
+          jest.fn(),
+        );
+      });
+
+      await waitFor(() => {
+        expect(customRendererInstance.setTopics).toHaveBeenCalledWith(topics);
+      });
+
+      // Then
+      expect(mockContext.unstable_subscribeMessageRange).toHaveBeenCalledWith(
+        expect.objectContaining({
+          topic: topicName,
+        }),
+      );
     });
 
     it("triggers re-subscription when preload topics change", async () => {
