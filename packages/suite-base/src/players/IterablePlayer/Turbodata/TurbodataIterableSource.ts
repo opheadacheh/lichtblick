@@ -139,6 +139,7 @@ export class TurbodataIterableSource implements ISerializedIterableSource {
           schemaData,
         };
         topicsByName.set(name, topic);
+        topicStats.set(name, { numMessages: topicMetadata.messageCount });
 
         if (messageEncoding != undefined) {
           try {
