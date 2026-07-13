@@ -105,7 +105,7 @@ $ yarn run desktop:build:prod   # compile necessary files
 $ yarn run web:build:prod
 
 # To build and run the web app using docker:
-$ docker build . -t lichtblick
+$ docker build --build-context turbodata=../turbodata -t lichtblick .
 $ docker run -p 8080:8080 lichtblick
 
 # It is possible to clean up build files using the following command:

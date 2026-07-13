@@ -2,9 +2,10 @@
 FROM node:22 AS build
 WORKDIR /src
 COPY . ./
+COPY --from=turbodata ts /turbodata/ts
 
 RUN corepack enable
-RUN yarn install --immutable
+RUN ELECTRON_SKIP_BINARY_DOWNLOAD=1 yarn install --immutable
 
 RUN yarn run web:build:prod
 
