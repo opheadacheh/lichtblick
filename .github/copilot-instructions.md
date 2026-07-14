@@ -79,7 +79,7 @@ ComponentName/
 ### Key Commands
 
 ```bash
-yarn web:serve               # Start web dev server (http://localhost:8080)
+yarn web:serve               # Start web dev server (http://localhost:8080/viz/)
 yarn desktop:serve           # Start webpack for Electron
 yarn desktop:start           # Launch Electron app (requires desktop:serve)
 yarn test                    # All unit tests (Jest)

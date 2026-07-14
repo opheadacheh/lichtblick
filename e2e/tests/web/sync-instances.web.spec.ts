@@ -33,8 +33,8 @@ test(
 
     try {
       // Navigate both pages to the Lichtblick web app
-      await page1.goto("/");
-      await page2.goto("localhost:8080");
+      await page1.goto("/viz/");
+      await page2.goto("/viz/");
 
       // Wait for both pages to load
       await page1.waitForLoadState("networkidle");

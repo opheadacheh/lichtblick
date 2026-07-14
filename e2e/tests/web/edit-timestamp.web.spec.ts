@@ -25,7 +25,7 @@ test(
     // Given
     const getTimeParam = () => new URL(page.url()).searchParams.get("time");
 
-    await page.goto("/");
+    await page.goto("/viz/");
     await loadFiles({ mainWindow: page, filenames: MCAP_FILENAME });
     const urlInitialTimestamp = "2025-02-26T10:37:15.547000000Z";
 
@@ -73,7 +73,7 @@ test(
     // Given
     const getTimeParam = () => new URL(page.url()).searchParams.get("time");
 
-    await page.goto("/");
+    await page.goto("/viz/");
     await loadFiles({ mainWindow: page, filenames: MCAP_FILENAME });
     const urlInitialTimestamp = "2025-02-26T10:37:15.547000000Z";
 

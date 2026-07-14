@@ -18,7 +18,7 @@ Follow the **test-conventions** skill for GWT pattern and core quality rules.
 
 | Platform | Runner | Base URL / Entry | Config |
 | --- | --- | --- | --- |
-| **Web** | Chromium | `http://localhost:8080` (via `yarn web:serve`) | `e2e/tests/web/playwright.config.ts` |
+| **Web** | Chromium | `http://localhost:8080/viz/` (via `yarn web:serve`) | `e2e/tests/web/playwright.config.ts` |
 | **Desktop** | Electron | Custom `electronApp` fixture | `e2e/tests/desktop/playwright.config.ts` |
 
 **Primary focus: desktop.** Write web tests only when the behavior is web-specific (e.g., URL-based data loading, multi-tab `BroadcastChannel` sync, timestamp URL parameters).
@@ -332,8 +332,8 @@ Always use `getByRole("button", { name: "..." })` for confirmation buttons, not 
 const context = await browser.newContext();
 const page1 = await context.newPage();
 const page2 = await context.newPage();
-await page1.goto("http://localhost:8080");
-await page2.goto("http://localhost:8080");
+await page1.goto("http://localhost:8080/viz/");
+await page2.goto("http://localhost:8080/viz/");
 // ...
 await context.close();
 ```

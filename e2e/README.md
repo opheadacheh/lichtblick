@@ -165,7 +165,7 @@ The Playwright MCP server exposes browser automation as MCP tools that AI agents
 1. Start the web app: `yarn web:serve`
 2. Open VS Code agent mode (Copilot Chat) and invoke `@lb-e2e-test`
 3. The MCP server starts automatically and opens a Chromium browser
-4. Ask the agent to navigate to `http://localhost:8080` and explore the UI
+4. Ask the agent to navigate to `http://localhost:8080/viz/` and explore the UI
 5. The agent captures accessibility snapshots to identify selectors
 6. Ask the agent to generate test scaffolds following the project conventions
 7. Review the generated test, add meaningful assertions, and refine

@@ -11,7 +11,7 @@ You create Playwright E2E tests for the Lichtblick desktop (Electron) and web ap
 
 **Before writing any test**, always:
 
-1. **Ask the user to start the application** before proceeding. For web tests, confirm that `yarn web:serve` is running at `http://localhost:8080`. For desktop tests, confirm that the desktop build exists (`yarn desktop:build:dev`). Do not proceed until the user confirms the app is running.
+1. **Ask the user to start the application** before proceeding. For web tests, confirm that `yarn web:serve` is running at `http://localhost:8080/viz/`. For desktop tests, confirm that the desktop build exists (`yarn desktop:build:dev`). Do not proceed until the user confirms the app is running.
 2. Read the **test-conventions** skill — `read_file(".github/skills/test-conventions/SKILL.md")`
 3. Read the **e2e-playwright-mcp** skill — `read_file(".github/skills/e2e-playwright-mcp/SKILL.md")`
 4. Read at least one **existing sibling spec file** in the same `e2e/tests/desktop/` subdirectory to match the exact style
@@ -27,7 +27,7 @@ You create Playwright E2E tests for the Lichtblick desktop (Electron) and web ap
 
 ### For Web Tests
 
-1. Ensure `yarn web:serve` is running at `http://localhost:8080`
+1. Ensure `yarn web:serve` is running at `http://localhost:8080/viz/`
 2. Use Playwright MCP to navigate and explore the UI
 3. Take accessibility snapshots to discover stable selectors
 4. Interact with elements to verify behavior before coding
@@ -122,7 +122,7 @@ import { test, expect } from "@playwright/test";
  */
 test("should <outcome> when <condition>", { tag: "@smoke" }, async ({ page }) => {
     // Given
-    await page.goto("http://localhost:8080");
+    await page.goto("http://localhost:8080/viz/");
     await page.getByTestId("DataSourceDialog").getByTestId("CloseIcon").click();
 
     // When

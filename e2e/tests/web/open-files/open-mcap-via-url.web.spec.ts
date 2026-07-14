@@ -10,7 +10,7 @@ test("should open an MCAP file via URL", { tag: "@smoke" }, async ({ page }) => 
   const player = new PlayerControls(page);
 
   // Given
-  await page.goto(`/?ds=remote-file&ds.url=${TEST_MCAP_URL}`);
+  await page.goto(`/viz/?ds=remote-file&ds.url=${TEST_MCAP_URL}`);
 
   // When
   const sourceTitle = page.getByText(TEST_MCAP_URL.slice(0, 25));

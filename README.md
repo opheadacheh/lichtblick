@@ -80,7 +80,7 @@ $ yarn desktop:serve        # start webpack dev server
 $ yarn desktop:start        # launch electron (make sure the desktop:serve finished to build)
 
 # To launch the web app:
-$ yarn run web:serve        # it will be avaiable in http://localhost:8080
+$ yarn run web:serve        # it will be available at http://localhost:8080/viz/
 ```
 
 :warning: Ubuntu users: the application may present some issues using GPU. In order to bypass the GPU and process it using directly the CPU (software), please run lichtblick using the variable `LIBGL_ALWAYS_SOFTWARE` set to `1`:

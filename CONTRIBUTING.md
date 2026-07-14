@@ -92,7 +92,7 @@ cd lichtblick
    yarn desktop:start        # Launch Electron (wait for desktop:serve to finish)
 
    # Web app:
-   yarn web:serve            # Available at http://localhost:8080
+   yarn web:serve            # Available at http://localhost:8080/viz/
    ```
 
 3. **Explore available commands:**
